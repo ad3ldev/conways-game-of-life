@@ -7,117 +7,24 @@ import (
 	"time"
 )
 
-func north(x int, y int, array [][]bool) bool {
-	x -= 1
-	if x < 0 {
-		return false
-	}
-	if array[x][y] {
-		return true
-	}
-	return false
-}
-func east(x int, y int, array [][]bool) bool {
-	y += 1
-	if y >= len(array[x]) {
-		return false
-	}
-	if array[x][y] {
-		return true
-	}
-	return false
-}
-func west(x int, y int, array [][]bool) bool {
-	y -= 1
-	if y < 0 {
-		return false
-	}
-	if array[x][y] {
-		return true
-	}
-	return false
-}
-func south(x int, y int, array [][]bool) bool {
-	x += 1
-	if x >= len(array) {
-		return false
-	}
-	if array[x][y] {
-		return true
-	}
-	return false
-}
-func nEast(x int, y int, array [][]bool) bool {
-	x -= 1
-	y += 1
-	if x < 0 || y >= len(array[x]) {
-		return false
-	}
-	if array[x][y] {
-		return true
-	}
-	return false
-}
-func sEast(x int, y int, array [][]bool) bool {
-	x += 1
-	y += 1
-	if x >= len(array) || y >= len(array[x]) {
-		return false
-	}
-	if array[x][y] {
-		return true
-	}
-	return false
-}
-func sWest(x int, y int, array [][]bool) bool {
-	x += 1
-	y -= 1
-	if x >= len(array) || y < 0 {
-		return false
-	}
-	if array[x][y] {
-		return true
-	}
-	return false
-}
-func nWest(x int, y int, array [][]bool) bool {
-	x -= 1
-	y -= 1
-	if x < 0 || y < 0 {
-		return false
-	}
-	if array[x][y] {
-		return true
-	}
-	return false
-}
+var directions [][]int
+
 func checkCell(x int, y int, array [][]bool) bool {
 	count := 0
-	if north(x, y, array) {
-		count++
+	for i := 0; i < len(directions); i++ {
+		nextX := x + directions[i][0]
+		nextY := y + directions[i][1]
+		if nextX < 0 || nextX >= len(array) ||
+			nextY < 0 || nextY >= len(array[x]) {
+			continue
+		}
+		if !array[nextX][nextY] {
+			continue
+		}
+		if array[nextX][nextY] {
+			count++
+		}
 	}
-	if east(x, y, array) {
-		count++
-	}
-	if west(x, y, array) {
-		count++
-	}
-	if south(x, y, array) {
-		count++
-	}
-	if nEast(x, y, array) {
-		count++
-	}
-	if sEast(x, y, array) {
-		count++
-	}
-	if nWest(x, y, array) {
-		count++
-	}
-	if sWest(x, y, array) {
-		count++
-	}
-
 	if array[x][y] {
 		if count < 2 {
 			return false
@@ -166,6 +73,7 @@ func printGeneration(rows int, cols int, array [][]bool) {
 	}
 }
 func main() {
+	directions = [][]int{{-1, 0}, {1, 0}, {0, -1}, {0, 1}, {1, 1}, {-1, -1}, {-1, 1}, {1, -1}}
 	rows := 12
 	cols := 12
 	array := newMatrix(rows, cols)
