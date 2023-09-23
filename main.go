@@ -94,9 +94,24 @@ func game() {
 }
 func main() {
 	directions = [][]int{{-1, 0}, {1, 0}, {0, -1}, {0, 1}, {1, 1}, {-1, -1}, {-1, 1}, {1, -1}}
-	a := app.New()
-	w := a.NewWindow("Hello World")
 
-	w.SetContent(widget.NewLabel("Hello World!"))
+	a := app.New()
+	w := a.NewWindow("Clock")
+	clock := widget.NewLabel("")
+	updateTime(clock)
+	w.SetContent(clock)
+	go func() {
+		for range time.Tick(time.Second) {
+			updateTime(clock)
+		}
+	}()
 	w.ShowAndRun()
+	tidyUp()
+}
+func updateTime(clock *widget.Label) {
+	formatted := time.Now().Format("Time: 03:04:05")
+	clock.SetText(formatted)
+}
+func tidyUp() {
+	fmt.Println("Exited")
 }
