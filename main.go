@@ -72,8 +72,7 @@ func printGeneration(rows int, cols int, array [][]bool) {
 		fmt.Println()
 	}
 }
-func main() {
-	directions = [][]int{{-1, 0}, {1, 0}, {0, -1}, {0, 1}, {1, 1}, {-1, -1}, {-1, 1}, {1, -1}}
+func game() {
 	rows := 12
 	cols := 12
 	array := newMatrix(rows, cols)
@@ -101,4 +100,7 @@ func main() {
 			return
 		}
 	}
+}
+func main() {
+	directions = [][]int{{-1, 0}, {1, 0}, {0, -1}, {0, 1}, {1, 1}, {-1, -1}, {-1, 1}, {1, -1}}
 }
