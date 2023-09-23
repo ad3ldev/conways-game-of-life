@@ -2,8 +2,8 @@ package main
 
 import (
 	"fmt"
-	"os"
-	"os/exec"
+	"fyne.io/fyne/v2/app"
+	"fyne.io/fyne/v2/widget"
 	"time"
 )
 
@@ -42,7 +42,6 @@ func checkCell(x int, y int, array [][]bool) bool {
 	}
 	return false
 }
-
 func newMatrix(rows int, cols int) [][]bool {
 	m := make([][]bool, rows)
 	for r := range m {
@@ -50,7 +49,6 @@ func newMatrix(rows int, cols int) [][]bool {
 	}
 	return m
 }
-
 func nextGeneration(rows int, cols int, array [][]bool) [][]bool {
 	nextGen := newMatrix(rows, cols)
 	for i := 0; i < rows; i++ {
@@ -90,17 +88,15 @@ func game() {
 	array[8][9] = true
 
 	for {
-		printGeneration(rows, cols, array)
 		array = nextGeneration(rows, cols, array)
 		time.Sleep(500 * time.Millisecond)
-		c := exec.Command("clear")
-		c.Stdout = os.Stdout
-		err := c.Run()
-		if err != nil {
-			return
-		}
 	}
 }
 func main() {
 	directions = [][]int{{-1, 0}, {1, 0}, {0, -1}, {0, 1}, {1, 1}, {-1, -1}, {-1, 1}, {1, -1}}
+	a := app.New()
+	w := a.NewWindow("Hello World")
+
+	w.SetContent(widget.NewLabel("Hello World!"))
+	w.ShowAndRun()
 }
